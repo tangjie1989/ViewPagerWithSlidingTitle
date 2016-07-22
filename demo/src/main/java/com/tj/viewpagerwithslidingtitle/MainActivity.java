@@ -13,12 +13,12 @@ import com.tj.library.indicator.TabPageIndicator;
 
 public class MainActivity extends FragmentActivity {
 
-    private ViewPager viewPager;
-    private TabPageIndicator tabTitleView;
+    private ViewPager mViewPager;
 
-    private int currViewPagerIndex = 0;
+    private int mCurrViewPagerIndex = 0;
 
-    private String[] title = new String[]{"星球大战", "老炮儿", "万万没想到", "夏洛特烦恼", "寻龙诀", "煎饼侠", "港囧", "侏罗纪世界"};
+    private static final String[] title = new String[]{"星球大战", "老炮儿", "万万没想到",
+            "夏洛特烦恼", "寻龙诀", "煎饼侠", "港囧", "侏罗纪世界"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +28,12 @@ public class MainActivity extends FragmentActivity {
 
         FragmentPagerAdapter adapter = new TabPageIndicatorAdapter(getSupportFragmentManager());
 
-        viewPager = (ViewPager)findViewById(R.id.view_pager);
-        viewPager.setAdapter(adapter);
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        mViewPager.setAdapter(adapter);
 
-        tabTitleView = (TabPageIndicator)findViewById(R.id.tab_title_view);
+        TabPageIndicator tabTitleView = (TabPageIndicator) findViewById(R.id.tab_title_view);
 
-        tabTitleView.setViewPager(viewPager);
+        tabTitleView.setViewPager(mViewPager);
         tabTitleView.setOnPageChangeListener(new PageChangeListener());
     }
 
@@ -41,9 +41,9 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public void onPageScrollStateChanged(int arg0) {
-            int index = viewPager.getCurrentItem();
-            if(arg0 == 0 && currViewPagerIndex != index){ //滑到对应页面时，才更新数据
-                currViewPagerIndex = index;
+            int index = mViewPager.getCurrentItem();
+            if (arg0 == 0 && mCurrViewPagerIndex != index) { //滑到对应页面时，才更新数据
+                mCurrViewPagerIndex = index;
             }
         }
 
@@ -58,7 +58,7 @@ public class MainActivity extends FragmentActivity {
 
     private class TabPageIndicatorAdapter extends FragmentPagerAdapter {
 
-        public TabPageIndicatorAdapter(FragmentManager fm) {
+        private TabPageIndicatorAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -81,10 +81,10 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            FragmentManager manager = ((Fragment)object).getFragmentManager();
-            if(manager != null){
+            FragmentManager manager = ((Fragment) object).getFragmentManager();
+            if (manager != null) {
                 FragmentTransaction trans = manager.beginTransaction();
-                trans.remove((Fragment)object);
+                trans.remove((Fragment) object);
                 trans.commit();
             }
         }

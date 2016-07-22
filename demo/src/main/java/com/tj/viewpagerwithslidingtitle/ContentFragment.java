@@ -7,43 +7,43 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class ContentFragment extends Fragment{
-	
-	public static final String FRAGMENT_TITLE = "fragment_title";
+public class ContentFragment extends Fragment {
 
-	private String viewTitle;
+    public static final String FRAGMENT_TITLE = "fragment_title";
 
-	public static ContentFragment newInstance(Bundle args) {
-		ContentFragment myFragment = new ContentFragment();
+    private String mViewTitle;
+
+    static ContentFragment newInstance(Bundle args) {
+        ContentFragment myFragment = new ContentFragment();
         myFragment.setArguments(args);
         return myFragment;
     }
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		Bundle bundle = getArguments();
-		if(bundle != null){
-			viewTitle = bundle.getString(FRAGMENT_TITLE);
-		}
-	}
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
 
-		View contentView = inflater.inflate(R.layout.fragment_content, null);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		TextView titleView = (TextView)contentView.findViewById(R.id.fragment_title);
-		titleView.setText(viewTitle);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            mViewTitle = bundle.getString(FRAGMENT_TITLE);
+        }
+    }
 
-		return contentView;
-	}
-	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View contentView = inflater.inflate(R.layout.fragment_content, null);
+
+        TextView titleView = (TextView) contentView.findViewById(R.id.fragment_title);
+        titleView.setText(mViewTitle);
+
+        return contentView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
 
 }

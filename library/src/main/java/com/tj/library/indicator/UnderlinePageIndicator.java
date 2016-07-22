@@ -10,12 +10,12 @@ import android.view.View;
 import com.tj.library.R;
 import com.tj.library.util.TabTitleScreenInfoUtil;
 
-public class UnderlinePageIndicator extends View{
+class UnderlinePageIndicator extends View{
 
-    private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    private int maxScrollSegments = 5; //将整个屏幕切成5段
-    private int screenWidth;
+    private int mMaxSegments = 5; //将整个屏幕切成5段
+    private int mScreenWidth;
     
     public UnderlinePageIndicator(Context context) {
         this(context, null);
@@ -38,14 +38,10 @@ public class UnderlinePageIndicator extends View{
     }
 
     private void initScreenSizeInfo(Context context){
-    	screenWidth = TabTitleScreenInfoUtil.getScreenWidth(context);
+    	mScreenWidth = TabTitleScreenInfoUtil.getScreenWidth(context);
     }
 
-    public int getSelectedColor() {
-        return mPaint.getColor();
-    }
-
-    public void setSelectedColor(int selectedColor) {
+    private void setSelectedColor(int selectedColor) {
         mPaint.setColor(selectedColor);
         invalidate();
     }
@@ -66,31 +62,24 @@ public class UnderlinePageIndicator extends View{
         
         canvas.drawRect(left, top, right, bottom, mPaint);
     }
-    
-    public int getLineMaxScrollSegments(){
-    	return maxScrollSegments;
+
+    int getLineMaxScrollSegments(){
+    	return mMaxSegments;
     }
-    
-    public int getStandardLineSegmentWidth(){
-    	return screenWidth / maxScrollSegments;
-    }
-    
-    public void setLineScrollSegments(int pageCount){
-    	if(pageCount < maxScrollSegments){
-    		maxScrollSegments = pageCount;
+
+    void setLineScrollSegments(int pageCount){
+    	if(pageCount < mMaxSegments){
+            mMaxSegments = pageCount;
     	}
-    	pageWidth = screenWidth / maxScrollSegments;
+    	pageWidth = mScreenWidth / mMaxSegments;
     }
     
     private float leftScrollDistance;//移动距离
     private float pageWidth ;//line宽度根据title宽度自动变化
     
-    public void updateLeftScrollDistance(float leftScrollDistance, float pageWidth){
+    void updateLeftScrollDistance(float leftScrollDistance, float pageWidth){
     	this.leftScrollDistance = leftScrollDistance;
     	this.pageWidth = pageWidth;
-    	
-//    	System.out.println("\r\n leftScrollDistance : " + leftScrollDistance + " pageWidth : " + pageWidth);
-    	
     	invalidate();
     }
 
